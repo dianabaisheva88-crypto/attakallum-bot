@@ -1,4 +1,4 @@
-﻿import telebot
+import telebot
 from telebot import types
 import random
 
@@ -10,102 +10,105 @@ bot = telebot.TeleBot(TOKEN)
 # ==============================
 words = {
     "Unit 1 — وَصْفُ النَّاسِ / Описание людей / Odamlarni tasvirlash": {
-    # --- Внешность ---
-    "مُستدِير": {"ru": "круглый", "uz": "dumaloq"},
-    "بَيْضَاوِيّ": {"ru": "овальный, яйцевидный", "uz": "tuxumsimon"},
-    "ناعِم": {"ru": "мягкий", "uz": "yumshoq"},
-    "خَشِن": {"ru": "жесткий", "uz": "dag‘al"},
-    "مُجَعَّد": {"ru": "кудрявый", "uz": "jingalak"},
-    "مُمَوَّج": {"ru": "волнистый", "uz": "to‘lqinli"},
-    "أَسْود": {"ru": "чёрный", "uz": "qora"},
-    "أَشْيَب": {"ru": "седой", "uz": "sochlari oq"},
-    "أَشْقر": {"ru": "блондин", "uz": "sariqsoch"},
-    "طويل (ة)": {"ru": "высокий", "uz": "bo‘yi baland"},
-    "قصير (ة)": {"ru": "короткий, низкий", "uz": "past, kalta"},
-    "متوسِّط (ة) / معتدِل (ة)": {"ru": "среднего роста", "uz": "o‘rtacha bo‘yli"},
-    "مُستقيم": {"ru": "стройный", "uz": "to‘g‘ri qomatli"},
-    "مُنْحَنٍ": {"ru": "изогнутый", "uz": "bukilgan"},
-    "قوِيّ (ة)": {"ru": "сильный", "uz": "kuchli"},
-    "ضعيف (ة)": {"ru": "слабый", "uz": "zaif"},
-    "ذو عَضَلات": {"ru": "мускулистый", "uz": "mushakdor"},
-    "عَسَلِيَّة": {"ru": "цвета мёда", "uz": "asal rang"},
-    "سوداء": {"ru": "чёрный (о глазах, волосах)", "uz": "qora"},
-    "زَرْقاء": {"ru": "синий", "uz": "ko‘k"},
-    "بُنِّيَّة": {"ru": "коричневый", "uz": "jigarrang"},
-    "خضراء": {"ru": "зелёный", "uz": "yashil"},
-    "واسِعة": {"ru": "широкий, большой", "uz": "keng"},
-    "ضَيِّقَة": {"ru": "узкий", "uz": "tor"},
-    "دَقِيقٌ / صَغير": {"ru": "маленький, тонкий", "uz": "kichik, ingichka"},
-    "كبير / أَفْطَس": {"ru": "большой", "uz": "katta"},
-    "دَاكِنة": {"ru": "тёмный", "uz": "to‘q rang"},
-    "فَاتِحة": {"ru": "светлый", "uz": "och rang"},
-    "قَمْحِيَّة / حِنْطِيَّة": {"ru": "светло-коричневый", "uz": "bug‘doyrang"},
-    "بيضاء": {"ru": "белый", "uz": "oq"},
-    "شَقْراء": {"ru": "блондин, светловолосый", "uz": "sariqsoch"},
-    "شاحِبة": {"ru": "бледный", "uz": "rangi oqarib ketgan"},
-    "وَسِيم": {"ru": "с родимыми пятнами", "uz": "xolga ega"},
-    "قَبِيح / دَمِيم": {"ru": "уродливый", "uz": "xunuk"},
-    "أَنِيق": {"ru": "красивый, элегантный", "uz": "kelishgan"},
-    "سَمِين": {"ru": "толстый", "uz": "semiz"},
-    "نَحِيف": {"ru": "тонкий, худой", "uz": "ozg‘in"},
-    "مُتَوَسِّط الوَزْن": {"ru": "среднего веса", "uz": "o‘rtacha vaznli"},
-    "حَامِل": {"ru": "беременная", "uz": "homilador"},
-    "مُعَاق": {"ru": "инвалид", "uz": "nogiron"},
-    "أَعْمَى / فَاقِد البَصَر / كَفِيفٌ": {"ru": "слепой", "uz": "ko‘r"},
-    "أَصَمُّ / فاقِد السَّمْع": {"ru": "глухой", "uz": "kar"},
-    "غَالية": {"ru": "дорогой", "uz": "qimmat"},
-    "رَخيصَة": {"ru": "дешёвый", "uz": "arzon"},
-    "جديدة": {"ru": "новый", "uz": "yangi"},
-    "بَالِية / رَثَّة / قديمة": {"ru": "изношенный, старый", "uz": "eski"},
-    "مُهَنْدَمَة / مُرَتَّبَة": {"ru": "аккуратный, опрятный", "uz": "ozoda"},
-    "غير مُرَتَّبَة": {"ru": "неопрятный, небрежный", "uz": "tartibsiz"},
-    "ذو شَارِب": {"ru": "усатый", "uz": "mo‘ylovli"},
-    "ذو لِحْيَة / مُلْتَحٍ": {"ru": "бородатый", "uz": "soqolli"},
-    # --- Одежда и особенности ---
-    "مُحَجَّبَة": {"ru": "женщина в хиджабе", "uz": "ro‘mol o‘ragan ayol"},
-    "مُنْتَقِبَة": {"ru": "женщина, скрывающая лицо (в никабе)", "uz": "niqobli ayol"},
-    "مُتَبَرِّجَة / سَافِرَة": {"ru": "женщина без хиджаба", "uz": "ro‘molsiz ayol"},
-    "عليه أثَرُ جُرُوح / نُدُوب": {"ru": "со шрамами, раненый", "uz": "chandiqli"},
-    "ذو - ذات شَامَة / ذو - ذات خَالٍ": {"ru": "с родимыми пятнами", "uz": "xollari bor"},
-    "أَصْلَع (صَلْعَاء)": {"ru": "лысый", "uz": "kal"},
-    "أَقْرَع (قَرْعَاء)": {"ru": "плешивый", "uz": "sochi to‘kilgan"},
-    # --- Возраст ---
-    "طِفل": {"ru": "ребёнок", "uz": "bola"},
-    "مُراهِق": {"ru": "подросток", "uz": "o‘smir"},
-    "شابٌّ": {"ru": "молодой человек", "uz": "yigit"},
-    "كَهْل": {"ru": "средних лет", "uz": "o‘rta yoshli"},
-    "عجُوز": {"ru": "пожилая женщина", "uz": "keksa ayol"},
-    "مُسِنٌّ": {"ru": "старый", "uz": "keksaygan"},
-    "في العِشْرينيَّات": {"ru": "в возрасте двадцати лет", "uz": "yigirma yoshlar atrofida"},
-    "في الثَّلاثِينيَّات": {"ru": "в возрасте тридцати лет", "uz": "o‘ttiz yoshlar atrofida"},
-    "في الأرْبَعينيَّات": {"ru": "в возрасте сорока лет", "uz": "qirq yoshlar atrofida"},
-    # --- Характер ---
-    "خَجُول / اِنْطِوَائِيّ × اِجْتِمَاعِي": {"ru": "застенчивый × общительный", "uz": "uyatchan × kirishimli"},
-    "ذكِيّ × غَبيّ": {"ru": "умный × глупый", "uz": "aqlli × ahmoq"},
-    "مُجتهد / نشِيط × مُهْمِل / كَسْلان": {"ru": "трудолюбивый × ленивый", "uz": "mehnatsevar × dangasa"},
-    "مُؤدَّب × قليل الأدب / وَقِح": {"ru": "вежливый × невежливый", "uz": "odobli × odobsiz"},
-    "طَيِّب / حَنُون / عَطُوف": {"ru": "добрый, отзывчивый", "uz": "mehribon"},
-    "فَظّ / غلِيظ / قاسٍ": {"ru": "грубый, жестокий", "uz": "qo‘pol, qattiqqo‘l"},
-    "قَنُوع × طَمَّاع": {"ru": "неприхотливый × ненасытный", "uz": "qanoatli × ochko‘z"},
-    "صادِق × كاذِب": {"ru": "честный × нечестный", "uz": "rostgo‘y × yolg‘onchi"},
-    "هادئ × عَصَبِي": {"ru": "спокойный × нервный", "uz": "tinch × asabiy"},
-    "شُجَاع × جَبَان": {"ru": "мужественный × трусливый", "uz": "jasur × qo‘rqoq"},
-    "فَخُور / مُتَكَبِّر / مَغْرور × مُتَوَاضِع": {"ru": "тщеславный × скромный", "uz": "mag‘rur × kamtar"},
-    "مُتَهَوِّر × مُتَرَدِّد": {"ru": "нетерпеливый × нерешительный", "uz": "shoshqaloq × ikkilanadigan"},
-    "كريم × بخил": {"ru": "щедрый × скупой", "uz": "saxiy × baxil"},
-    "مُسَالِم × شَرِس / عُدْوَاني": {"ru": "уживчивый × неуживчивый", "uz": "tinch × tajovuzkor"},
-    "صَبُور × مَلُول": {"ru": "терпеливый × нетерпеливый", "uz": "sabrli × sabrsiz"},
-    "عَنِيد × مُتَفَاهم / مُطِيعٌ": {"ru": "упрямый × послушный", "uz": "qaysar × itoatli"},
-    "ثَرْثَار × قليل الكلام": {"ru": "болтливый × необщительный", "uz": "gapdon × kamgap"},
-    "نَهِمٌ / أَكُولٌ": {"ru": "прожорливый", "uz": "ochko‘z"},
-    "خائف / مَذْعُور": {"ru": "боязливый", "uz": "qo‘rqoq"},
-    "مُتضايق / غضبان": {"ru": "расстроенный, сердитый", "uz": "xafa, jahli chiqqan"},
-    "حَانِق / هَائِج / مُغْتَاظ": {"ru": "разъярённый, раздражённый", "uz": "g‘azablangan"},
-    "مُشْمَئِز / مُتَقَزِّز": {"ru": "брезгливый, чувствующий отвращение", "uz": "jirkanch"},
-    "مَصْدُوم / مَذْهُول / مُنْدَهِش": {"ru": "потрясённый, ошеломлённый", "uz": "hayratlangan"},
-    "مُشْتَاق": {"ru": "тоскующий", "uz": "sog‘ingan"},
-    "اِسْتِفْزَازِي": {"ru": "провокационный, разжигающий", "uz": "qo‘zg‘atuvchi"},
-    },
+        # --- Внешность ---
+        "مُستدِير": {"ru": "круглый", "uz": "dumaloq"},
+        "بَيْضَاوِيّ": {"ru": "овальный, яйцевидный", "uz": "tuxumsimon"},
+        "ناعِم": {"ru": "мягкий", "uz": "yumshoq"},
+        "خَشِن": {"ru": "жесткий", "uz": "dag‘al"},
+        "مُجَعَّد": {"ru": "кудрявый", "uz": "jingalak"},
+        "مُمَوَّج": {"ru": "волнистый", "uz": "to‘lqinli"},
+        "أَسْود": {"ru": "чёрный", "uz": "qora"},
+        "أَشْيَب": {"ru": "седой", "uz": "sochlari oq"},
+        "أَشْقر": {"ru": "блондин", "uz": "sariqsoch"},
+        "طويل (ة)": {"ru": "высокий", "uz": "bo‘yi baland"},
+        "قصير (ة)": {"ru": "короткий, низкий", "uz": "past, kalta"},
+        "متوسِّط (ة) / معتدِل (ة)": {"ru": "среднего роста", "uz": "o‘rtacha bo‘yli"},
+        "مُستقيم": {"ru": "стройный", "uz": "to‘g‘ri qomatli"},
+        "مُنْحَنٍ": {"ru": "изогнутый", "uz": "bukilgan"},
+        "قوِيّ (ة)": {"ru": "сильный", "uz": "kuchli"},
+        "ضعيف (ة)": {"ru": "слабый", "uz": "zaif"},
+        "ذو عَضَلات": {"ru": "мускулистый", "uz": "mushakdor"},
+        "عَسَلِيَّة": {"ru": "цвета мёда", "uz": "asal rang"},
+        "سوداء": {"ru": "чёрный (о глазах, волосах)", "uz": "qora"},
+        "زَرْقاء": {"ru": "синий", "uz": "ko‘k"},
+        "بُنِّيَّة": {"ru": "коричневый", "uz": "jigarrang"},
+        "خضراء": {"ru": "зелёный", "uz": "yashil"},
+        "واسِعة": {"ru": "широкий, большой", "uz": "keng"},
+        "ضَيِّقَة": {"ru": "узкий", "uz": "tor"},
+        "دَقِيقٌ / صَغير": {"ru": "маленький, тонкий", "uz": "kichik, ingichka"},
+        "كبير / أَفْطَس": {"ru": "большой", "uz": "katta"},
+        "دَاكِنة": {"ru": "тёмный", "uz": "to‘q rang"},
+        "فَاتِحة": {"ru": "светлый", "uz": "och rang"},
+        "قَمْحِيَّة / حِنْطِيَّة": {"ru": "светло-коричневый", "uz": "bug‘doyrang"},
+        "بيضاء": {"ru": "белый", "uz": "oq"},
+        "شَقْراء": {"ru": "блондин, светловолосый", "uz": "sariqsoch"},
+        "شاحِبة": {"ru": "бледный", "uz": "rangi oqarib ketgan"},
+        "وَسِيم": {"ru": "с родимыми пятнами", "uz": "xolga ega"},
+        "قَبِيح / دَمِيم": {"ru": "уродливый", "uz": "xunuk"},
+        "أَنِيق": {"ru": "красивый, элегантный", "uz": "kelishgan"},
+        "سَمِين": {"ru": "толстый", "uz": "semiz"},
+        "نَحِيف": {"ru": "тонкий, худой", "uz": "ozg‘in"},
+        "مُتَوَسِّط الوَزْن": {"ru": "среднего веса", "uz": "o‘rtacha vaznli"},
+        "حَامِل": {"ru": "беременная", "uz": "homilador"},
+        "مُعَاق": {"ru": "инвалид", "uz": "nogiron"},
+        "أَعْمَى / فَاقِد البَصَر / كَفِيفٌ": {"ru": "слепой", "uz": "ko‘r"},
+        "أَصَمُّ / فاقِد السَّمْع": {"ru": "глухой", "uz": "kar"},
+        "غَالية": {"ru": "дорогой", "uz": "qimmat"},
+        "رَخيصَة": {"ru": "дешёвый", "uz": "arzon"},
+        "جديدة": {"ru": "новый", "uz": "yangi"},
+        "بَالِية / رَثَّة / قديمة": {"ru": "изношенный, старый", "uz": "eski"},
+        "مُهَنْدَمَة / مُرَتَّبَة": {"ru": "аккуратный, опрятный", "uz": "ozoda"},
+        "غير مُرَتَّبَة": {"ru": "неопрятный, небрежный", "uz": "tartibsiz"},
+        "ذو شَارِب": {"ru": "усатый", "uz": "mo‘ylovli"},
+        "ذو لِحْيَة / مُلْتَحٍ": {"ru": "бородатый", "uz": "soqolli"},
+
+        # --- Одежда и особенности ---
+        "مُحَجَّبَة": {"ru": "женщина в хиджабе", "uz": "ro‘mol o‘ragan ayol"},
+        "مُنْتَقِبَة": {"ru": "женщина, скрывающая лицо (в никабе)", "uz": "niqobli ayol"},
+        "مُتَبَرِّجَة / سَافِرَة": {"ru": "женщина без хиджаба", "uz": "ro‘molsiz ayol"},
+        "عليه أثَرُ جُرُوح / نُدُوب": {"ru": "со шрамами, раненый", "uz": "chandiqli"},
+        "ذو - ذات شَامَة / ذو - ذات خَالٍ": {"ru": "с родимыми пятнами", "uz": "xollari bor"},
+        "أَصْلَع (صَلْعَاء)": {"ru": "лысый", "uz": "kal"},
+        "أَقْرَع (قَرْعَاء)": {"ru": "плешивый", "uz": "sochi to‘kilgan"},
+
+        # --- Возраст ---
+        "طِفل": {"ru": "ребёнок", "uz": "bola"},
+        "مُراهِق": {"ru": "подросток", "uz": "o‘smir"},
+        "شابٌّ": {"ru": "молодой человек", "uz": "yigit"},
+        "كَهْل": {"ru": "средних лет", "uz": "o‘rta yoshli"},
+        "عجُوز": {"ru": "пожилая женщина", "uz": "keksa ayol"},
+        "مُسِنٌّ": {"ru": "старый", "uz": "keksaygan"},
+        "في العِشْرينيَّات": {"ru": "в возрасте двадцати лет", "uz": "yigirma yoshlar atrofida"},
+        "في الثَّلاثِينيَّات": {"ru": "в возрасте тридцати лет", "uz": "o‘ttiz yoshlar atrofida"},
+        "في الأرْبَعينيَّات": {"ru": "в возрасте сорока лет", "uz": "qirq yoshlar atrofida"},
+
+        # --- Характер ---
+        "خَجُول / اِنْطِوَائِيّ × اِجْتِمَاعِي": {"ru": "застенчивый × общительный", "uz": "uyatchan × kirishimli"},
+        "ذكِيّ × غَبيّ": {"ru": "умный × глупый", "uz": "aqlli × ahmoq"},
+        "مُجتهد / نشِيط × مُهْمِل / كَسْلان": {"ru": "трудолюбивый × ленивый", "uz": "mehnatsevar × dangasa"},
+        "مُؤدَّب × قليل الأدب / وَقِح": {"ru": "вежливый × невежливый", "uz": "odobli × odobsiz"},
+        "طَيِّب / حَنُون / عَطُوف": {"ru": "добрый, отзывчивый", "uz": "mehribon"},
+        "فَظّ / غلِيظ / قاسٍ": {"ru": "грубый, жестокий", "uz": "qo‘pol, qattiqqo‘l"},
+        "قَنُوع × طَمَّاع": {"ru": "неприхотливый × ненасытный", "uz": "qanoatli × ochko‘z"},
+        "صادِق × كاذِب": {"ru": "честный × нечестный", "uz": "rostgo‘y × yolg‘onchi"},
+        "هادئ × عَصَبِي": {"ru": "спокойный × нервный", "uz": "tinch × asabiy"},
+        "شُجَاع × جَبَان": {"ru": "мужественный × трусливый", "uz": "jasur × qo‘rqoq"},
+        "فَخُور / مُتَكَبِّر / مَغْرور × مُتَوَاضِع": {"ru": "тщеславный × скромный", "uz": "mag‘rur × kamtar"},
+        "مُتَهَوِّر × مُتَرَدِّد": {"ru": "нетерпеливый × нерешительный", "uz": "shoshqaloq × ikkilanadigan"},
+        "كريم × بخيل": {"ru": "щедрый × скупой", "uz": "saxiy × baxil"},
+        "مُسَالِم × شَرِس / عُدْوَاني": {"ru": "уживчивый × неуживчивый", "uz": "tinch × tajovuzkor"},
+        "صَبُور × مَلُول": {"ru": "терпеливый × нетерпеливый", "uz": "sabrli × sabrsiz"},
+        "عَنِيد × مُتَفَاهم / مُطِيعٌ": {"ru": "упрямый × послушный", "uz": "qaysar × itoatli"},
+        "ثَرْثَار × قليل الكلام": {"ru": "болтливый × необщительный", "uz": "gapdon × kamgap"},
+        "نَهِمٌ / أَكُولٌ": {"ru": "прожорливый", "uz": "ochko‘z"},
+        "خائف / مَذْعُور": {"ru": "боязливый", "uz": "qo‘rqoq"},
+        "مُتضايق / غضبان": {"ru": "расстроенный, сердитый", "uz": "xafa, jahli chiqqan"},
+        "حَانِق / هَائِج / مُغْتَاظ": {"ru": "разъярённый, раздражённый", "uz": "g‘azablangan"},
+        "مُشْمَئِز / مُتَقَزِّز": {"ru": "брезгливый, чувствующий отвращение", "uz": "jirkanch"},
+        "مَصْدُوم / مَذْهُول / مُنْدَهِش": {"ru": "потрясённый, ошеломлённый", "uz": "hayratlangan"},
+        "مُشْتَاق": {"ru": "тоскующий", "uz": "sog‘ingan"},
+        "اِسْتِفْزَازِي": {"ru": "провокационный, разжигающий", "uz": "qo‘zg‘atuvchi"},
+    }
 }
 
 # ==============================
@@ -122,6 +125,7 @@ def start(message):
         reply_markup=markup
     )
 
+
 # ==============================
 # 🔹 Выбор юнита
 # ==============================
@@ -137,15 +141,15 @@ def select_unit(message):
     )
     bot.register_next_step_handler(message, mode_select, unit)
 
+
 # ==============================
 # 🔹 Выбор режима
 # ==============================
 def mode_select(message, unit):
     if message.text == "📚 Словарь":
-        vocab = "\n".join([f"{ar} — {ru}" for ar, ru in words[unit].items()])
+        vocab = "\n".join([f"{ar} — {vals['ru']} / {vals['uz']}" for ar, vals in words[unit].items()])
         bot.send_message(message.chat.id, f"📖 {unit}\n\n{vocab}")
         start(message)
-
     elif message.text == "🧠 Тренировка":
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(
@@ -161,6 +165,7 @@ def mode_select(message, unit):
     else:
         start(message)
 
+
 # ==============================
 # 🔹 Выбор направления
 # ==============================
@@ -172,15 +177,17 @@ def choose_direction(message, unit):
     else:
         start(message)
 
+
 # ==============================
 # 🔹 Тест: Арабский → Русский
 # ==============================
 def send_quiz_ar_to_ru(message, unit):
     arabic, correct = random.choice(list(words[unit].items()))
-    all_answers = list(words[unit].values())
-    options = [correct]
+    correct_ru = correct['ru']
+    all_ru = [v['ru'] for v in words[unit].values()]
+    options = [correct_ru]
     while len(options) < 4:
-        fake = random.choice(all_answers)
+        fake = random.choice(all_ru)
         if fake not in options:
             options.append(fake)
     random.shuffle(options)
@@ -189,25 +196,24 @@ def send_quiz_ar_to_ru(message, unit):
     for opt in options:
         markup.add(types.KeyboardButton(opt))
 
-    bot.send_message(
-        message.chat.id,
-        f"🧠 Как переводится: {arabic}?",
-        reply_markup=markup
-    )
-    bot.register_next_step_handler(message, check_answer_ar_to_ru, unit, arabic, correct)
+    bot.send_message(message.chat.id, f"🧠 Как переводится: {arabic}?", reply_markup=markup)
+    bot.register_next_step_handler(message, check_answer_ar_to_ru, unit, arabic, correct_ru)
 
-def check_answer_ar_to_ru(message, unit, arabic, correct):
-    if message.text == correct:
+
+def check_answer_ar_to_ru(message, unit, arabic, correct_ru):
+    if message.text == correct_ru:
         bot.send_message(message.chat.id, "✅ Верно!")
     else:
-        bot.send_message(message.chat.id, f"❌ Неверно. Правильный ответ: {correct}")
+        bot.send_message(message.chat.id, f"❌ Неверно. Правильный ответ: {correct_ru}")
     next_action(message, unit)
+
 
 # ==============================
 # 🔹 Тест: Русский → Арабский
 # ==============================
 def send_quiz_ru_to_ar(message, unit):
     arabic, correct = random.choice(list(words[unit].items()))
+    correct_ru = correct['ru']
     all_arabic = list(words[unit].keys())
     options = [arabic]
     while len(options) < 4:
@@ -220,47 +226,5 @@ def send_quiz_ru_to_ar(message, unit):
     for opt in options:
         markup.add(types.KeyboardButton(opt))
 
-    bot.send_message(
-        message.chat.id,
-        f"🧠 Как по-арабски: {correct}?",
-        reply_markup=markup
-    )
-    bot.register_next_step_handler(message, check_answer_ru_to_ar, unit, correct, arabic)
-
-def check_answer_ru_to_ar(message, unit, correct, arabic):
-    if message.text == arabic:
-        bot.send_message(message.chat.id, "✅ Верно!")
-    else:
-        bot.send_message(message.chat.id, f"❌ Неверно. Правильный ответ: {arabic}")
-    next_action(message, unit)
-
-# ==============================
-# 🔹 Следующее действие
-# ==============================
-def next_action(message, unit):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(types.KeyboardButton("🧠 Ещё вопрос"), types.KeyboardButton("🏠 Меню"))
-    bot.send_message(message.chat.id, "Выбери действие:", reply_markup=markup)
-    bot.register_next_step_handler(message, next_action_choice, unit)
-
-def next_action_choice(message, unit):
-    if message.text == "🧠 Ещё вопрос":
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(
-            types.KeyboardButton("➡️ Арабский → Русский"),
-            types.KeyboardButton("⬅️ Русский → Арабский")
-        )
-        bot.send_message(
-            message.chat.id,
-            "Выбери направление:",
-            reply_markup=markup
-        )
-        bot.register_next_step_handler(message, choose_direction, unit)
-    else:
-        start(message)
-
-# ==============================
-print("✅ Бот запущен и готов к двусторонним тестам.")
-bot.polling()
-
-
+    bot.send_message(message.chat.id, f"🧠 Как по-арабски: {correct_ru}?", reply_markup=markup)
+    bot.register_next_step_handler(message, check_answer_ru_to_ar, unit
