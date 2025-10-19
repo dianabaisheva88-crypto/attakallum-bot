@@ -9,7 +9,7 @@ bot = telebot.TeleBot(TOKEN)
 # 📚 СЛОВАРЬ по юнитам
 # ==============================
 words = {
-    "Unit 1 — وَصْفُ النَّاسِ / Описание людей / Odamlarni tasvirlash": {
+    "Unit 1 — وَصْفُ النَّاسِ / Oписание людей / Odamlarni tasvirlash": {
         # --- Внешность ---
         "مُستدِير": {"ru": "круглый", "uz": "dumaloq"},
         "بَيْضَاوِيّ": {"ru": "овальный, яйцевидный", "uz": "tuxumsimon"},
@@ -61,7 +61,6 @@ words = {
         "غير مُرَتَّبَة": {"ru": "неопрятный, небрежный", "uz": "tartibsiz"},
         "ذو شَارِب": {"ru": "усатый", "uz": "mo‘ylovli"},
         "ذو لِحْيَة / مُلْتَحٍ": {"ru": "бородатый", "uz": "soqolli"},
-
         # --- Одежда и особенности ---
         "مُحَجَّبَة": {"ru": "женщина в хиджабе", "uz": "ro‘mol o‘ragan ayol"},
         "مُنْتَقِبَة": {"ru": "женщина, скрывающая лицо (в никабе)", "uz": "niqobli ayol"},
@@ -70,7 +69,6 @@ words = {
         "ذو - ذات شَامَة / ذو - ذات خَالٍ": {"ru": "с родимыми пятнами", "uz": "xollari bor"},
         "أَصْلَع (صَلْعَاء)": {"ru": "лысый", "uz": "kal"},
         "أَقْرَع (قَرْعَاء)": {"ru": "плешивый", "uz": "sochi to‘kilgan"},
-
         # --- Возраст ---
         "طِفل": {"ru": "ребёнок", "uz": "bola"},
         "مُراهِق": {"ru": "подросток", "uz": "o‘smir"},
@@ -81,7 +79,6 @@ words = {
         "في العِشْرينيَّات": {"ru": "в возрасте двадцати лет", "uz": "yigirma yoshlar atrofida"},
         "في الثَّلاثِينيَّات": {"ru": "в возрасте тридцати лет", "uz": "o‘ttiz yoshlar atrofida"},
         "في الأرْبَعينيَّات": {"ru": "в возрасте сорока лет", "uz": "qirq yoshlar atrofida"},
-
         # --- Характер ---
         "خَجُول / اِنْطِوَائِيّ × اِجْتِمَاعِي": {"ru": "застенчивый × общительный", "uz": "uyatchan × kirishimli"},
         "ذكِيّ × غَبيّ": {"ru": "умный × глупый", "uz": "aqlli × ahmoq"},
@@ -108,14 +105,37 @@ words = {
         "مَصْدُوم / مَذْهُول / مُنْدَهِش": {"ru": "потрясённый, ошеломлённый", "uz": "hayratlangan"},
         "مُشْتَاق": {"ru": "тоскующий", "uz": "sog‘ingan"},
         "اِسْتِفْزَازِي": {"ru": "провокационный, разжигающий", "uz": "qo‘zg‘atuvchi"},
-    }
+  },
 }
+
+# ==============================
+# 🔹 Храним язык пользователя
+# ==============================
+user_language = {}
 
 # ==============================
 # 🔹 Главное меню
 # ==============================
 @bot.message_handler(commands=['start'])
 def start(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add(types.KeyboardButton("Русский 🇷🇺"), types.KeyboardButton("Oʻzbek 🇺🇿"))
+    bot.send_message(
+        message.chat.id,
+        "🌍 Выбери язык перевода / Tarjima tilini tanlang:",
+        reply_markup=markup
+    )
+    bot.register_next_step_handler(message, set_language)
+
+def set_language(message):
+    if "Рус" in message.text:
+        user_language[message.chat.id] = "ru"
+    elif "Oʻzbek" in message.text or "Uz" in message.text:
+        user_language[message.chat.id] = "uz"
+    else:
+        bot.send_message(message.chat.id, "Пожалуйста, выбери 🇷🇺 или 🇺🇿.")
+        return start(message)
+
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for unit in words.keys():
         markup.add(types.KeyboardButton(unit))
@@ -125,7 +145,6 @@ def start(message):
         reply_markup=markup
     )
 
-
 # ==============================
 # 🔹 Выбор юнита
 # ==============================
@@ -133,61 +152,53 @@ def start(message):
 def select_unit(message):
     unit = message.text
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(types.KeyboardButton("📚 Словарь"), types.KeyboardButton("🧠 Тренировка"))
-    bot.send_message(
-        message.chat.id,
-        f"Выбран {unit}. Что будем делать?",
-        reply_markup=markup
-    )
+    markup.add(types.KeyboardButton("📚 Словарь / Lugʻat"), types.KeyboardButton("🧠 Тренировка / Mashq"))
+    bot.send_message(message.chat.id, f"Выбран {unit}. Что будем делать?", reply_markup=markup)
     bot.register_next_step_handler(message, mode_select, unit)
-
 
 # ==============================
 # 🔹 Выбор режима
 # ==============================
 def mode_select(message, unit):
-    if message.text == "📚 Словарь":
-        vocab = "\n".join([f"{ar} — {vals['ru']} / {vals['uz']}" for ar, vals in words[unit].items()])
+    if "Словарь" in message.text or "Lugʻat" in message.text:
+        lang = user_language.get(message.chat.id, "ru")
+        vocab = "\n".join([f"{ar} — {data[lang]}" for ar, data in words[unit].items()])
         bot.send_message(message.chat.id, f"📖 {unit}\n\n{vocab}")
         start(message)
-    elif message.text == "🧠 Тренировка":
+
+    elif "Тренировка" in message.text or "Mashq" in message.text:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(
-            types.KeyboardButton("➡️ Арабский → Русский"),
-            types.KeyboardButton("⬅️ Русский → Арабский")
+            types.KeyboardButton("➡️ Арабский → Перевод"),
+            types.KeyboardButton("⬅️ Перевод → Арабский")
         )
-        bot.send_message(
-            message.chat.id,
-            "Выбери направление тренировки:",
-            reply_markup=markup
-        )
+        bot.send_message(message.chat.id, "Выбери направление:", reply_markup=markup)
         bot.register_next_step_handler(message, choose_direction, unit)
     else:
         start(message)
-
 
 # ==============================
 # 🔹 Выбор направления
 # ==============================
 def choose_direction(message, unit):
     if "Арабский" in message.text:
-        send_quiz_ar_to_ru(message, unit)
-    elif "Русский" in message.text:
-        send_quiz_ru_to_ar(message, unit)
+        send_quiz_ar_to_lang(message, unit)
+    elif "Перевод" in message.text:
+        send_quiz_lang_to_ar(message, unit)
     else:
         start(message)
 
-
 # ==============================
-# 🔹 Тест: Арабский → Русский
+# 🔹 Тест: Арабский → Перевод (RU/UZ)
 # ==============================
-def send_quiz_ar_to_ru(message, unit):
+def send_quiz_ar_to_lang(message, unit):
+    lang = user_language.get(message.chat.id, "ru")
     arabic, correct = random.choice(list(words[unit].items()))
-    correct_ru = correct['ru']
-    all_ru = [v['ru'] for v in words[unit].values()]
-    options = [correct_ru]
+    correct = correct[lang]
+    all_answers = [w[lang] for w in words[unit].values()]
+    options = [correct]
     while len(options) < 4:
-        fake = random.choice(all_ru)
+        fake = random.choice(all_answers)
         if fake not in options:
             options.append(fake)
     random.shuffle(options)
@@ -197,23 +208,22 @@ def send_quiz_ar_to_ru(message, unit):
         markup.add(types.KeyboardButton(opt))
 
     bot.send_message(message.chat.id, f"🧠 Как переводится: {arabic}?", reply_markup=markup)
-    bot.register_next_step_handler(message, check_answer_ar_to_ru, unit, arabic, correct_ru)
+    bot.register_next_step_handler(message, check_answer_ar_to_lang, unit, arabic, correct)
 
-
-def check_answer_ar_to_ru(message, unit, arabic, correct_ru):
-    if message.text == correct_ru:
+def check_answer_ar_to_lang(message, unit, arabic, correct):
+    if message.text == correct:
         bot.send_message(message.chat.id, "✅ Верно!")
     else:
-        bot.send_message(message.chat.id, f"❌ Неверно. Правильный ответ: {correct_ru}")
+        bot.send_message(message.chat.id, f"❌ Неверно. Правильный ответ: {correct}")
     next_action(message, unit)
 
-
 # ==============================
-# 🔹 Тест: Русский → Арабский
+# 🔹 Тест: Перевод (RU/UZ) → Арабский
 # ==============================
-def send_quiz_ru_to_ar(message, unit):
-    arabic, correct = random.choice(list(words[unit].items()))
-    correct_ru = correct['ru']
+def send_quiz_lang_to_ar(message, unit):
+    lang = user_language.get(message.chat.id, "ru")
+    arabic, correct_data = random.choice(list(words[unit].items()))
+    correct = correct_data[lang]
     all_arabic = list(words[unit].keys())
     options = [arabic]
     while len(options) < 4:
@@ -226,5 +236,38 @@ def send_quiz_ru_to_ar(message, unit):
     for opt in options:
         markup.add(types.KeyboardButton(opt))
 
-    bot.send_message(message.chat.id, f"🧠 Как по-арабски: {correct_ru}?", reply_markup=markup)
-    bot.register_next_step_handler(message, check_answer_ru_to_ar, unit
+    bot.send_message(message.chat.id, f"🧠 Как по-арабски: {correct}?", reply_markup=markup)
+    bot.register_next_step_handler(message, check_answer_lang_to_ar, unit, correct, arabic)
+
+def check_answer_lang_to_ar(message, unit, correct, arabic):
+    if message.text == arabic:
+        bot.send_message(message.chat.id, "✅ Верно!")
+    else:
+        bot.send_message(message.chat.id, f"❌ Неверно. Правильный ответ: {arabic}")
+    next_action(message, unit)
+
+# ==============================
+# 🔹 Действие после ответа
+# ==============================
+def next_action(message, unit):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add(types.KeyboardButton("🧠 Ещё вопрос"), types.KeyboardButton("🏠 Меню"))
+    bot.send_message(message.chat.id, "Выбери действие:", reply_markup=markup)
+    bot.register_next_step_handler(message, next_action_choice, unit)
+
+def next_action_choice(message, unit):
+    if "Ещё" in message.text:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add(
+            types.KeyboardButton("➡️ Арабский → Перевод"),
+            types.KeyboardButton("⬅️ Перевод → Арабский")
+        )
+        bot.send_message(message.chat.id, "Выбери направление:", reply_markup=markup)
+        bot.register_next_step_handler(message, choose_direction, unit)
+    else:
+        start(message)
+
+# ==============================
+print("✅ Бот запущен с поддержкой русского и узбекского перевода.")
+bot.polling()
+
